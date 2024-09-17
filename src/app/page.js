@@ -19,7 +19,6 @@ export default function Home() {
 
   return (
     <main className="flex min-h-screen flex-col px-24 pt-20 w-full">
-
         {user ? (<>
             <section className="w-full">
                 <h1 className="text-3xl my-5 border-l-2 border-l-green-600 pl-2 py-1 ml-4">Attractions you might like</h1>

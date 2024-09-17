@@ -1,3 +1,4 @@
+import Link from "next/link";
 
 const TravelCard = ({ destination, className }) => {
   return (
@@ -39,8 +40,8 @@ const TravelCard = ({ destination, className }) => {
             )}
           </div>
         </div>
-        <button className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition-colors duration-300 mt-auto">
-          View Details
+        <button asChild className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition-colors duration-300 mt-auto">
+            <Link href={`/destinations/${destination.id}`}>View details</Link>
         </button>
       </div>
     </div>
