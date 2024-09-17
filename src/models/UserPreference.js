@@ -1,16 +1,23 @@
 import mongoose from 'mongoose';
 
 const UserPreferenceSchema = new mongoose.Schema({
-  user: {
+  userId: {
     type: String,
     required: true,
     unique: true,
   },
-  attractionTypes: [String],
-  activities: [String],
-  budget: String,
-  travelStyle: String,
-  preferredRegions: [String],
+  activityTypes: {
+    type: [String], // Array of strings
+    required: true,
+  },
+  attractionTypes: {
+    type: [String],
+    required: true,
+  },
+  regionTypes: {
+    type: [String],
+    required: true,
+  }
 });
 
 export default mongoose.models.UserPreference || mongoose.model('UserPreference', UserPreferenceSchema);

@@ -25,7 +25,7 @@ const Header = () => {
                     </>
                 ) : (
                     <>
-                        <span className="capitalize">{user.username} | </span>
+                        <span className="capitalize">{user?.username} | </span>
                         <UserButton />
                     </>
                 )}

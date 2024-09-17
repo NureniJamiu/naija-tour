@@ -35,7 +35,7 @@ const SelectAttraction = () => {
                 ? prev.filter(item => item !== name)
                 : [...prev, name];
 
-            console.log("Updated selection:", newSelection);
+            // console.log("Updated selection:", newSelection);
             updatePreference('destination', newSelection);
             return newSelection;
         });

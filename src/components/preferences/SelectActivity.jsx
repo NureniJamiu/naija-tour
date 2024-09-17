@@ -29,7 +29,7 @@ const SelectActivity = () => {
                 ? prev.filter(item => item !== name)
                 : [...prev, name];
 
-            console.log("Updated selection:", newSelection);
+            // console.log("Updated selection:", newSelection);
             updatePreference('destination', newSelection);
             return newSelection;
         });
@@ -37,7 +37,7 @@ const SelectActivity = () => {
 
     const handleNext = () => {
         dispatch(setActivityTypes(selectedActivity));
-        console.log("Activity types updated in Redux store");
+        // console.log("Activity types updated in Redux store");
 
         router.push('/preferences/select-region');
     };

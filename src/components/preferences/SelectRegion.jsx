@@ -1,9 +1,11 @@
 'use client';
+import { addUserPreference } from "@/app/actions/actions";
 import { usePreferences } from "@/context/preferencesContext";
 import { setRegionTypes } from "@/redux/userPreferencesSlice";
+import { useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../ui/button";
 import SelectionCard from "./SelectionCard";
 
@@ -18,7 +20,9 @@ const regions = [
     "North-West"
   ];
 
-const SelectRegion = () => {
+  const SelectRegion = () => {
+    const userPreferences = useSelector(state => state.userPreferences);
+    const { user } = useUser();
     const [selectedRegion, setSelectedRegion] = useState([]);
     const { updatePreference } = usePreferences();
     const dispatch = useDispatch();
@@ -30,16 +34,23 @@ const SelectRegion = () => {
                 ? prev.filter(item => item !== name)
                 : [...prev, name];
 
-            console.log("Updated selection:", newSelection);
+            // console.log("Updated selection:", newSelection);
             updatePreference('destination', newSelection);
             return newSelection;
         });
     };
 
-    const handleNext = () => {
+    const handleNext = async() => {
         dispatch(setRegionTypes(selectedRegion));
-        console.log("Region types updated in Redux store");
-        // Add navigation logic here if needed
+
+        // save user preferences to the database
+        await addUserPreference({
+            userId: user.id,
+            activityTypes: userPreferences.activityTypes,
+            attractionTypes: userPreferences.attractionTypes,
+            regionTypes: userPreferences.regionTypes
+          })
+
         router.push('/');
     };
 
