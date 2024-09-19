@@ -6,7 +6,7 @@ import { useUser } from "@clerk/nextjs";
 import { useEffect, useState } from "react";
 import { ScrollMenu } from 'react-horizontal-scrolling-menu';
 import 'react-horizontal-scrolling-menu/dist/styles.css';
-import { fetchUserPreferences } from "./actions/actions";
+import { fetchUserPreferences } from "./actions/preference";
 
 export default function Home() {
     const { isLoaded, user } = useUser();
