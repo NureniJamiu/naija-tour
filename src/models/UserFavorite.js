@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const UserFavoriteSchema = new mongoose.Schema({
-  user: {
+  userId: {
     type: String,
     required: true,
   },
@@ -9,8 +9,14 @@ const UserFavoriteSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  attractionName: {
+    type: String,
+    required: true,
+  },
+  attractionType: {
+    type: String,
+    required: true,
+  },
 }, { timestamps: true });
-
-UserFavoriteSchema.index({ user: 1, attractionId: 1 }, { unique: true });
 
 export default mongoose.models.UserFavorite || mongoose.model('UserFavorite', UserFavoriteSchema);
