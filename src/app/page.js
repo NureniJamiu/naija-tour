@@ -13,7 +13,7 @@ export default function Home() {
     const [userPreferences, setUserPreferences] = useState(null);
     const [recommendations, setRecommendations] = useState(null);
 
-    // fetch user preferences
+    // Fetch user preferences when user is logged in
     useEffect(() => {
         const getUserPreferences = async () => {
             if (isLoaded && user) {
@@ -28,10 +28,10 @@ export default function Home() {
                 }
             }
         };
-
         getUserPreferences();
     }, [isLoaded, user]);
 
+    // Show loading state if the page is still checking authentication state
     if (!isLoaded) return (
         <div className="h-screen flex items-center justify-center">
             <span>Loading...</span>
@@ -40,61 +40,59 @@ export default function Home() {
 
     return (
         <main className="flex min-h-screen flex-col px-24 pt-20 w-full">
-          {isLoaded ? (
+          {user && recommendations ? (
+            // Display recommendations when the user is logged in and recommendations are available
             <>
-              {recommendations && (
-                <>
-                    <section className="w-full">
-                        <h1 className="text-3xl my-5 border-l-2 border-l-green-600 pl-2 py-1 ml-4">
-                            Attractions you might like
-                        </h1>
-                        <ScrollMenu>
-                            {recommendations.attractionRecommendations.map((destination) => (
-                            <TravelCard
-                                className="w-80 mr-5"
-                                itemId={destination.id} // NOTE: itemId is required for track items
-                                key={destination.id}
-                                destination={destination}
-                            />
-                            ))}
-                        </ScrollMenu>
-                    </section>
+              <section className="w-full">
+                  <h1 className="text-3xl my-5 border-l-2 border-l-green-600 pl-2 py-1 ml-4">
+                      Attractions you might like
+                  </h1>
+                  <ScrollMenu>
+                      {recommendations.attractionRecommendations.map((destination) => (
+                      <TravelCard
+                          className="w-80 mr-5"
+                          itemId={destination.id}
+                          key={destination.id}
+                          destination={destination}
+                      />
+                      ))}
+                  </ScrollMenu>
+              </section>
 
-                    <section className="w-full">
-                        <h1 className="text-3xl my-5 border-l-2 border-l-green-600 pl-2 py-1 ml-4">
-                            Based on your activities of interest
-                        </h1>
-                        <ScrollMenu>
-                            {recommendations.activityRecommendations.map((destination) => (
-                            <TravelCard
-                                className="w-80 mr-5"
-                                itemId={destination.id} // NOTE: itemId is required for track items
-                                key={destination.id}
-                                destination={destination}
-                            />
-                            ))}
-                        </ScrollMenu>
-                    </section>
+              <section className="w-full">
+                  <h1 className="text-3xl my-5 border-l-2 border-l-green-600 pl-2 py-1 ml-4">
+                      Based on your activities of interest
+                  </h1>
+                  <ScrollMenu>
+                      {recommendations.activityRecommendations.map((destination) => (
+                      <TravelCard
+                          className="w-80 mr-5"
+                          itemId={destination.id}
+                          key={destination.id}
+                          destination={destination}
+                      />
+                      ))}
+                  </ScrollMenu>
+              </section>
 
-                    <section className="w-full">
-                        <h1 className="text-3xl my-5 border-l-2 border-l-green-600 pl-2 py-1 ml-4">
-                            Recommendations based on your preferred regions
-                        </h1>
-                        <ScrollMenu>
-                            {recommendations.regionRecommendations.map((destination) => (
-                            <TravelCard
-                                className="w-80 mr-5"
-                                itemId={destination.id} // NOTE: itemId is required for track items
-                                key={destination.id}
-                                destination={destination}
-                            />
-                            ))}
-                        </ScrollMenu>
-                    </section>
-                </>
-              )}
+              <section className="w-full">
+                  <h1 className="text-3xl my-5 border-l-2 border-l-green-600 pl-2 py-1 ml-4">
+                      Recommendations based on your preferred regions
+                  </h1>
+                  <ScrollMenu>
+                      {recommendations.regionRecommendations.map((destination) => (
+                      <TravelCard
+                          className="w-80 mr-5"
+                          itemId={destination.id}
+                          key={destination.id}
+                          destination={destination}
+                      />
+                      ))}
+                  </ScrollMenu>
+              </section>
             </>
           ) : (
+            // Display fallback content for all users or non-signed-in users
             <section>
               <h1 className="text-3xl my-5 border-l-2 border-l-green-600 pl-2 py-1 ml-4">
                 All Destinations

@@ -28,7 +28,7 @@ export async function addUserFavorite({ userId, destinationId, destinationName, 
 export async function fetchUserFavorites(userId) {
     try {
       await connectToDB();
-      const favorites = await UserFavorite.findOne({ userId });
+      const favorites = await UserFavorite.find({ userId });
 
       if (!favorites) {
         return { success: false, message: 'User favorites not found' };
@@ -38,5 +38,21 @@ export async function fetchUserFavorites(userId) {
     } catch (error) {
       console.error("Failed to fetch user favorites:", error);
       return { success: false, error: 'Error fetching user favorites' };
+    }
+  }
+
+  export async function deleteUserFavorite(userId, favoriteId) {
+    try {
+      await connectToDB();
+      const result = await UserFavorite.findOneAndDelete({ userId, _id: favoriteId });
+
+      if (!result) {
+        return { success: false, message: 'Favorite not found for this user' };
+      }
+
+      return { success: true, message: 'Favorite deleted successfully' };
+    } catch (error) {
+      console.error("Failed to delete user favorite:", error);
+      return { success: false, error: 'Error deleting user favorite' };
     }
   }
