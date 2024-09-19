@@ -42,23 +42,32 @@ const Header = () => {
 
   // Function to handle favorite deletion
   async function handleDeleteFavorite(userId, favoriteId, setFavorites) {
+    // Confirm deletion action from the user
     const confirmed = window.confirm("Are you sure you want to delete this favorite?");
+
     if (confirmed) {
       try {
+        // Call the server action to delete the favorite
         const response = await deleteUserFavorite(userId, favoriteId);
+
         if (response.success) {
-          // Update the state to remove the deleted favorite
+          // Remove the favorite from state after successful deletion
           setFavorites((prevFavorites) => prevFavorites.filter((f) => f.id !== favoriteId));
           alert("Favorite deleted successfully");
           console.log("Favorite deleted successfully");
         } else {
-          console.log("Error deleting favorite");
+          // Log the specific message returned from the server
+          console.error("Error deleting favorite:", response.message);
+          alert(`Error deleting favorite: ${response.message}`);
         }
       } catch (error) {
+        // Catch any unexpected errors and log them
         console.error("Error deleting favorite:", error);
+        alert("An error occurred while deleting the favorite. Please try again.");
       }
     }
   }
+
 
   return (
     <nav className="fixed top-0 left-0 w-full flex items-center justify-between px-24 py-3 bg-white shadow-sm z-10">
@@ -114,7 +123,7 @@ const Header = () => {
                         </span>
                         <span
                           className="inline-block text-red-500 cursor-pointer hover:bg-red-200 rounded p-2"
-                          onClick={() => handleDeleteFavorite(user.id, favorite.id, setFavorites)}
+                          onClick={() => handleDeleteFavorite(user.id, favorite._id, setFavorites)}
                         >
                           <Trash2 size={18} />
                         </span>

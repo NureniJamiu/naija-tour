@@ -47,12 +47,13 @@ export async function fetchUserFavorites(userId) {
       const result = await UserFavorite.findOneAndDelete({ userId, _id: favoriteId });
 
       if (!result) {
+        console.error(`Favorite with ID ${favoriteId} not found for user ${userId}`);
         return { success: false, message: 'Favorite not found for this user' };
       }
 
       return { success: true, message: 'Favorite deleted successfully' };
     } catch (error) {
-      console.error("Failed to delete user favorite:", error);
-      return { success: false, error: 'Error deleting user favorite' };
+        console.error(`Failed to delete favorite for user ${userId}, favorite ID ${favoriteId}:`, error);
+        return { success: false, error: 'Error deleting user favorite' };
     }
   }
