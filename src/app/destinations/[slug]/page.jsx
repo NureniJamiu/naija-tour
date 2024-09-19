@@ -1,16 +1,23 @@
 'use client'
+import { addUserFavorite } from "@/app/actions/favorites"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { destinations } from "@/db/data"
+import { useUser } from "@clerk/nextjs"
 import { Banknote, MapPin, Star } from "lucide-react"
 import Image from "next/image"
+import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 const DestinationPage = ({params}) => {
-    const [destination, setDestination] = useState(null);
+  const [destination, setDestination] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const router = useRouter()
+  const {user} = useUser();
 
   useEffect(() => {
     const findDestination = () => {
@@ -44,6 +51,26 @@ const DestinationPage = ({params}) => {
 
     if (!destination) {
       return <div>Destination not found</div>;
+    }
+
+    const handleClick = async () => {
+        setIsLoading(true);
+        console.log("STARTING ADD TO FAVORITES")
+        if (!user) return router.push("/sign-in");
+        try {
+            const result = await addUserFavorite({
+                userId: user.id,
+                destinationId: destination.id,
+                destinationName: destination.name,
+                destinationType: destination.type
+            })
+            console.log("Favorite added successfully")
+            console.log(result)
+        } catch (error) {
+            console.log("ERROR:", error)
+        } finally {
+            setIsLoading(false);
+        }
     }
 
   return (
@@ -179,8 +206,8 @@ const DestinationPage = ({params}) => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Button variant="secondary" size="lg">
-            Add to favorites now
+          <Button variant="secondary" size="lg" onClick={handleClick} disabled={isLoading}>
+            {!isLoading ? "Add to favorites now" : "Adding to favorites..."}
           </Button>
         </CardContent>
       </Card>

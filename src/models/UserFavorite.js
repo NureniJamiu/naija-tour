@@ -5,15 +5,15 @@ const UserFavoriteSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  attractionId: {
+  destinationId: {
     type: String,
     required: true,
   },
-  attractionName: {
+  destinationName: {
     type: String,
     required: true,
   },
-  attractionType: {
+  destinationType: {
     type: String,
     required: true,
   },
