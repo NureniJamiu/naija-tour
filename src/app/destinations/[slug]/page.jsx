@@ -64,10 +64,9 @@ const DestinationPage = ({params}) => {
                 destinationName: destination.name,
                 destinationType: destination.type
             })
-            console.log("Favorite added successfully")
-            console.log(result)
+            alert("Favorite added successfully")
         } catch (error) {
-            console.log("ERROR:", error)
+            alert("ERROR:", error)
         } finally {
             setIsLoading(false);
         }
