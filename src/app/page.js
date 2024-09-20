@@ -38,72 +38,82 @@ export default function Home() {
         </div>
     );
 
+    // Fisher-Yates (Knuth) Shuffle algorithm
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];
+        }
+        return array;
+    }
+
+
     return (
         <main className="flex min-h-screen flex-col px-24 pt-20 w-full">
           {user && recommendations ? (
-            // Display recommendations when the user is logged in and recommendations are available
-            <>
-              <section className="w-full">
-                  <h1 className="text-3xl my-5 border-l-2 border-l-green-600 pl-2 py-1 ml-4">
-                      Attractions you might like
-                  </h1>
-                  <ScrollMenu>
-                      {recommendations.attractionRecommendations.map((destination) => (
-                      <TravelCard
-                          className="w-80 mr-5"
-                          itemId={destination.id}
-                          key={destination.id}
-                          destination={destination}
-                      />
-                      ))}
-                  </ScrollMenu>
-              </section>
+                // Display recommendations when the user is logged in and recommendations are available
+                <>
+                    <section className="w-full">
+                    <h1 className="text-3xl my-5 border-l-2 border-l-green-600 pl-2 py-1 ml-4">
+                        Attractions you might like
+                    </h1>
+                    <ScrollMenu>
+                        {shuffleArray(recommendations.attractionRecommendations).map((destination) => (
+                        <TravelCard
+                            className="w-80 mr-5"
+                            itemId={destination.id}
+                            key={destination.id}
+                            destination={destination}
+                        />
+                        ))}
+                    </ScrollMenu>
+                    </section>
 
-              <section className="w-full">
-                  <h1 className="text-3xl my-5 border-l-2 border-l-green-600 pl-2 py-1 ml-4">
-                      Based on your activities of interest
-                  </h1>
-                  <ScrollMenu>
-                      {recommendations.activityRecommendations.map((destination) => (
-                      <TravelCard
-                          className="w-80 mr-5"
-                          itemId={destination.id}
-                          key={destination.id}
-                          destination={destination}
-                      />
-                      ))}
-                  </ScrollMenu>
-              </section>
+                    <section className="w-full">
+                    <h1 className="text-3xl my-5 border-l-2 border-l-green-600 pl-2 py-1 ml-4">
+                        Based on your activities of interest
+                    </h1>
+                    <ScrollMenu>
+                        {shuffleArray(recommendations.activityRecommendations).map((destination) => (
+                        <TravelCard
+                            className="w-80 mr-5"
+                            itemId={destination.id}
+                            key={destination.id}
+                            destination={destination}
+                        />
+                        ))}
+                    </ScrollMenu>
+                    </section>
 
-              <section className="w-full">
-                  <h1 className="text-3xl my-5 border-l-2 border-l-green-600 pl-2 py-1 ml-4">
-                      Recommendations based on your preferred regions
-                  </h1>
-                  <ScrollMenu>
-                      {recommendations.regionRecommendations.map((destination) => (
-                      <TravelCard
-                          className="w-80 mr-5"
-                          itemId={destination.id}
-                          key={destination.id}
-                          destination={destination}
-                      />
-                      ))}
-                  </ScrollMenu>
-              </section>
-            </>
-          ) : (
-            // Display fallback content for all users or non-signed-in users
-            <section>
-              <h1 className="text-3xl my-5 border-l-2 border-l-green-600 pl-2 py-1 ml-4">
-                All Destinations
-              </h1>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {destinations.map((destination) => (
-                  <TravelCard key={destination?.id} destination={destination} />
-                ))}
-              </div>
-            </section>
-          )}
+                    <section className="w-full">
+                    <h1 className="text-3xl my-5 border-l-2 border-l-green-600 pl-2 py-1 ml-4">
+                        Recommendations based on your preferred regions
+                    </h1>
+                    <ScrollMenu>
+                        {shuffleArray(recommendations.regionRecommendations).map((destination) => (
+                        <TravelCard
+                            className="w-80 mr-5"
+                            itemId={destination.id}
+                            key={destination.id}
+                            destination={destination}
+                        />
+                        ))}
+                    </ScrollMenu>
+                    </section>
+                </>
+                ) : (
+                // Display fallback content for all users or non-signed-in users
+                <section>
+                    <h1 className="text-3xl my-5 border-l-2 border-l-green-600 pl-2 py-1 ml-4">
+                    All Destinations
+                    </h1>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                    {destinations.map((destination) => (
+                        <TravelCard key={destination?.id} destination={destination} />
+                    ))}
+                    </div>
+                </section>
+                )}
         </main>
       );
 }

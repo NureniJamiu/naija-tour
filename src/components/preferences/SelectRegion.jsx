@@ -1,5 +1,4 @@
 'use client';
-import { addUserPreference } from "@/app/actions/actions";
 import { usePreferences } from "@/context/preferencesContext";
 import { setRegionTypes } from "@/redux/userPreferencesSlice";
 import { useUser } from "@clerk/nextjs";
@@ -8,6 +7,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "../ui/button";
 import SelectionCard from "./SelectionCard";
+import { addUserPreference } from "@/app/actions/preference";
 
 const regions = [
     "North",
