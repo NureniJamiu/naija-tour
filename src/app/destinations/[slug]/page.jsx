@@ -6,7 +6,6 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { destinations } from "@/db/data"
 import { useUser } from "@clerk/nextjs"
 import { Banknote, MapPin, Star } from "lucide-react"
-import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
@@ -90,8 +89,6 @@ const DestinationPage = ({params}) => {
       <Tabs defaultValue="overview" className="mb-8">
         <TabsList className="grid w-full grid-cols-4 mb-4">
           <TabsTrigger value="overview">Overview</TabsTrigger>
-          <TabsTrigger value="attractions" disabled>Attractions</TabsTrigger>
-          <TabsTrigger value="accommodations" disabled>Accommodations</TabsTrigger>
           <TabsTrigger value="reviews">Reviews</TabsTrigger>
         </TabsList>
         <TabsContent value="overview">
@@ -120,56 +117,6 @@ const DestinationPage = ({params}) => {
               </p>
             </CardContent>
           </Card>
-        </TabsContent>
-        <TabsContent value="attractions">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {["Ubud Monkey Forest", "Tanah Lot Temple", "Mount Batur"].map((attraction) => (
-              <Card key={attraction}>
-                <CardHeader>
-                  <CardTitle>{attraction}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Image
-                    src="/placeholder.svg?height=200&width=300"
-                    alt={attraction}
-                    width={300}
-                    height={200}
-                    className="rounded-lg mb-4"
-                  />
-                  <p className="text-sm text-muted-foreground">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut
-                    labore et dolore magna aliqua.
-                  </p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </TabsContent>
-        <TabsContent value="accommodations">
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {["Luxury Resort", "Beachfront Villa", "Eco Lodge"].map((accommodation) => (
-              <Card key={accommodation}>
-                <CardHeader>
-                  <CardTitle>{accommodation}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <Image
-                    src="/placeholder.svg?height=200&width=300"
-                    alt={accommodation}
-                    width={300}
-                    height={200}
-                    className="rounded-lg mb-4"
-                  />
-                  <p className="text-sm text-muted-foreground mb-2">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                  </p>
-                  <Button variant="outline" className="w-full">
-                    Book Now
-                  </Button>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
         </TabsContent>
         <TabsContent value="reviews">
           <div className="grid gap-6 md:grid-cols-2">
