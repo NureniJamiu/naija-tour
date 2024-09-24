@@ -46,8 +46,7 @@ export default function Home() {
         }
         return array;
     }
-
-
+    console.log("User Preferences: ", userPreferences);
     return (
         <main className="flex min-h-screen flex-col px-24 pt-20 w-full">
           {user && recommendations ? (
